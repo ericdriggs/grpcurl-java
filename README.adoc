@@ -1,0 +1,24 @@
+= grpcurl-java
+:table-caption!:
+:toc: macro
+
+toc::[]
+
+Example of using project panama to call grpcurl (go) from java.
+
+
+== Pre-requisites
+
+* Java 19
+* Gradle 7.6 or later
+* grpcurl installed as shared library
+** TODO: docs for osx and linux
+
+
+== Intellij setup
+
+https://nljug.org/intellijidea/how-to-enable-java-preview-features-and-run-code-from-intellij-idea[enable preview in java compiler]
+
+
+== Usage
+

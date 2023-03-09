@@ -1,6 +1,7 @@
 buildscript {
     ext {
         javaVersion = JavaVersion.VERSION_19
+        junitVersion = '5.8.1'
     }
 }
 
@@ -9,8 +10,19 @@ plugins {
     id 'idea'
 }
 
-
 sourceCompatibility = javaVersion
 targetCompatibility = javaVersion
 
+test {
+    systemProperties System.properties
+    useJUnitPlatform()
+}
 
+dependencies {
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
