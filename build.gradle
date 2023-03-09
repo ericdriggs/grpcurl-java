@@ -1,0 +1,16 @@
+buildscript {
+    ext {
+        javaVersion = JavaVersion.VERSION_19
+    }
+}
+
+plugins {
+    id 'java'
+    id 'idea'
+}
+
+
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
+
+
