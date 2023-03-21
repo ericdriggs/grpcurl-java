@@ -5,6 +5,7 @@ import com.github.fullstorydev.grpcurl.osx.grpcurl_h;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.foreign.MemoryAddress;
+import java.lang.foreign.MemorySegment;
 import java.lang.foreign.MemorySession;
 
 @Slf4j
@@ -26,14 +27,17 @@ public class Grpcurl {
 
         try (MemorySession session = MemorySession.openConfined()) {
 
-            var cString = session.allocateUtf8String(osArgsString);
-            MemoryAddress memoryAddress = grpcurl_h.cmain(cString);
-            System.out.println(memoryAddress);
+            MemorySegment osArgsSegment = session.allocateUtf8String(osArgsString);
 
-            String json = memoryAddress.getUtf8String(0);
-            exitCodeMessage = ExitCodeMessage.fromJson(json);
+            //TODO: how do I free the memory from response MemoryAddress?
+            MemoryAddress response = grpcurl_h.cmain(osArgsSegment);
+            String responseJson = response.getUtf8String(0);
+
+            exitCodeMessage = ExitCodeMessage.fromJson(responseJson);
+
         }
         return exitCodeMessage;
+
 
     }
 }
