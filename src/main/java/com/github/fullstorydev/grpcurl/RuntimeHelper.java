@@ -1,4 +1,4 @@
-package com.github.fullstorydev.grpcurl.osx;
+package com.github.fullstorydev.grpcurl;
 
 import java.lang.foreign.Linker;
 import java.lang.foreign.FunctionDescriptor;

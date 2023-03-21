@@ -1,7 +1,6 @@
 package com.github.fullstorydev.grpcurl;
 
 
-import com.github.fullstorydev.grpcurl.osx.grpcurl_h;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.foreign.MemoryAddress;

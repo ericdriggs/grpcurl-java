@@ -1,4 +1,4 @@
-package com.github.fullstorydev.grpcurl.osx;
+package com.github.fullstorydev.grpcurl;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.foreign.*;
