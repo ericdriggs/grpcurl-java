@@ -10,9 +10,9 @@ Example of using project panama to call grpcurl (go) from java.
 == Pre-requisites
 
 * Java 19
-* Gradle 7.6 or later
-* grpcurl installed as shared library
-** TODO: docs for osx and linux
+* Gradle 8.0.2 or later
+* grpcurl installed as shared library from https://github.com/ericdriggs/grpcurl
+
 
 
 == Intellij setup
@@ -34,21 +34,13 @@ https://nljug.org/intellijidea/how-to-enable-java-preview-features-and-run-code-
     --header-class-name grpcurl_h \
     grpcurl.h
 
----
-final class RuntimeHelper {
 
-    private RuntimeHelper() {}
-    private final static Linker LINKER = Linker.nativeLinker();
-    private final static ClassLoader LOADER = RuntimeHelper.class.getClassLoader();
-    private final static MethodHandles.Lookup MH_LOOKUP = MethodHandles.lookup();
-    private final static SymbolLookup SYMBOL_LOOKUP;
+== TODO
 
-    final static SegmentAllocator CONSTANT_ALLOCATOR =
-            (size, align) -> MemorySegment.allocateNative(size, align, MemorySession.openImplicit());
+* docs for osx and linux
+* jna/jni example since preview features require jvm flag --enable-preview
+* example integration test with mock grpc server
+* see if osx panama can be generalized to linux
 
-    static {
-        System.load("/usr/local/lib/grpcurl.dylib");
-        //System.loadLibrary("grpcurl.dylib");
-        SymbolLookup loaderLookup = SymbolLookup.loaderLookup();
-        SYMBOL_LOOKUP = name -> loaderLookup.lookup(name).or(() -> LINKER.defaultLookup().lookup(name));
-    }
+
+
