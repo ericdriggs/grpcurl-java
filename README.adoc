@@ -38,6 +38,7 @@ https://nljug.org/intellijidea/how-to-enable-java-preview-features-and-run-code-
 == TODO
 
 * docs for osx and linux
+* figure out how to load dylib as a library instead of requiring hard path
 * jna/jni example since preview features require jvm flag --enable-preview
 * example integration test with mock grpc server
 * see if osx panama can be generalized to linux
