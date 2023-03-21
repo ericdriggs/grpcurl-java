@@ -1,0 +1,47 @@
+= grpcurl-java
+:table-caption!:
+:toc: macro
+
+toc::[]
+
+Example of using project panama to call grpcurl (go) from java.
+
+
+== Pre-requisites
+
+* Java 19
+* Gradle 8.0.2 or later
+* grpcurl installed as shared library from https://github.com/ericdriggs/grpcurl
+
+
+
+== Intellij setup
+
+https://nljug.org/intellijidea/how-to-enable-java-preview-features-and-run-code-from-intellij-idea[enable preview in java compiler]
+
+
+== Usage
+
+
+
+
+== jextract options
+
+    jextract --source -t com.github.fullstorydev.grpcurl \
+    -I /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include \
+    -I /usr/local/include/grpcurl \
+    -l grpcurl \
+    --header-class-name grpcurl_h \
+    grpcurl.h
+
+
+== TODO
+
+* docs for osx and linux
+* figure out how to load dylib as a library instead of requiring hard path
+* jna/jni example since preview features require jvm flag --enable-preview
+* example integration test with mock grpc server
+* see if osx panama can be generalized to linux
+
+
+

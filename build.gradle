@@ -1,6 +1,9 @@
 buildscript {
     ext {
+        jacksonCoreVersion = '2.13.1'
         javaVersion = JavaVersion.VERSION_19
+        junitVersion = '5.8.1'
+        lombokVersion = "1.18.26"
     }
 }
 
@@ -9,8 +12,24 @@ plugins {
     id 'idea'
 }
 
-
 sourceCompatibility = javaVersion
 targetCompatibility = javaVersion
 
+test {
+    systemProperties System.properties
+    useJUnitPlatform()
+}
 
+dependencies {
+    implementation 'org.slf4j:slf4j-api:1.7.36'
+    implementation "com.fasterxml.jackson.core:jackson-core:${jacksonCoreVersion}"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonCoreVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
