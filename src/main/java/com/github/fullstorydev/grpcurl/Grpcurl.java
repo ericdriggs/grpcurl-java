@@ -1,28 +1,39 @@
 package com.github.fullstorydev.grpcurl;
 
-import java.lang.foreign.MemorySegment;
-import java.lang.foreign.MemorySession;
-import java.lang.foreign.ValueLayout;
 
+import com.github.fullstorydev.grpcurl.osx.grpcurl_h;
+import lombok.extern.slf4j.Slf4j;
+
+import java.lang.foreign.MemoryAddress;
+import java.lang.foreign.MemorySession;
+
+@Slf4j
 public class Grpcurl {
 
 
     public static void main(String[] osArgs) {
 
+        ExitCodeMessage exitCodeMessage = grpcurl(osArgs);
+        log.debug("exitCodeMessage: {}", exitCodeMessage);
+    }
+
+    public static ExitCodeMessage grpcurl(String[] osArgs) {
         // Use auto-closable session so don't need to manage off-heap memory
+        String osArgsString = String.join("\n", osArgs);
+        log.debug("osArgsString: {}", osArgsString);
+
+        ExitCodeMessage exitCodeMessage = new ExitCodeMessage(-1,"not yet run");
+
         try (MemorySession session = MemorySession.openConfined()) {
 
-            // Allocate off-heap memory to store pointers for each arg cString
-            MemorySegment cStrings = session.allocateArray(ValueLayout.ADDRESS, osArgs.length);
+            var cString = session.allocateUtf8String(osArgsString);
+            MemoryAddress memoryAddress = grpcurl_h.cmain(cString);
+            System.out.println(memoryAddress);
 
-            // Copy the strings from on-heap String[] to off-heap MemorySegments
-            for (int i = 0; i < osArgs.length; i++) {
-                // Allocate a string off-heap, then store a pointer to it
-                MemorySegment cString = session.allocateUtf8String(osArgs[i]);
-                cStrings.setAtIndex(ValueLayout.ADDRESS, i, cString);
-            }
-
-            grpcurl_h.mainExport(cStrings);
+            String json = memoryAddress.getUtf8String(0);
+            exitCodeMessage = ExitCodeMessage.fromJson(json);
         }
+        return exitCodeMessage;
+
     }
 }

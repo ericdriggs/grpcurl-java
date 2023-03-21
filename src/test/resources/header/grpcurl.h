@@ -74,39 +74,7 @@ typedef struct { void *data; GoInt len; GoInt cap; } GoSlice;
 extern "C" {
 #endif
 
-
-/* mainExport calls main function using parameter instead of stdin
-allows calling main from other languages when use buildmode c-shared
-supports all flags
-
-usage:
-
-    pass the same arguments you would pass as if calling from the command-line, only as a parameter array (GoSlice)
-    do not pass program name (grpcurl) -- this is automatically populated
-
-osx - shared library installation
-
-    # build as shared library
-    git clone https://github.com/fullstorydev/grpcurl.git
-    cd grpcurl/cmd/grpcurl
-    go build  -buildmode=c-shared -o grpcurl.dylib
-
-    # install
-    sudo mkdir -p /usr/local/lib/
-    sudo mv grpcurl.dylib /usr/local/lib/
-    sudo mkdir -p /usr/local/include/
-    sudo mv grpcurl.h /usr/local/include/
-
-    # verify dylib file
-    otool -L /usr/local/lib/grpcurl.dylib
-
-    # verify loaded after rebooting machine
-    otool -D grpcurl.dylib
-
-
-
-*/
-extern void mainExport(GoSlice osArgs);
+extern char* cmain(char* osArgsC);
 
 #ifdef __cplusplus
 }
